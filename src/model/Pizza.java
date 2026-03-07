@@ -4,8 +4,8 @@ public class Pizza extends Producto {
      private String tamano;
      private String sabor;
 
-     public Pizza(int id, String nombre, String tamano, String sabor) {
-         super(id, nombre);
+     public Pizza(String nombre, String tamano, String sabor) {
+         super(nombre);
          this.tamano = tamano;
          this.sabor = sabor;
      }
@@ -26,6 +26,14 @@ public class Pizza extends Producto {
                  System.out.println("ERROR, tamaño inválido.");
                  return 0;
          }
+     
      }
+     @Override
+    public String getTipo() { return "Pizza"; }
+
+    @Override
+    public String toString() {
+        return super.toString() + " (Sabor = " + sabor + ", Tamaño = " + tamanio + ")";
+    }
      //===== Cambiar despues de que se hagan las reglas ======//
 }
