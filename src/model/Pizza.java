@@ -33,7 +33,7 @@ public class Pizza extends Producto {
 
     @Override
     public String toString() {
-        return super.toString() + " (Sabor = " + sabor + ", Tamaño = " + tamanio + ")";
+        return super.toString() + " (Sabor = " + sabor + ", Tamaño = " + tamano + ")";
     }
      //===== Cambiar despues de que se hagan las reglas ======//
 }
