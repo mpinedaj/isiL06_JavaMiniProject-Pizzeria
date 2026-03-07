@@ -1,5 +1,5 @@
 package model;
-import service.IdGenerator;
+import services.IdGenerator;
 
 public abstract class Producto implements Pedible {
     private int id;

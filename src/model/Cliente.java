@@ -1,5 +1,5 @@
 package model;
-import service.IdGenerator;
+import services.IdGenerator;
 
 public class Cliente {
     private int id;
@@ -7,7 +7,7 @@ public class Cliente {
     private String telefono;
 
     public Cliente(String nombre, String telefono) {
-        this.id = 100; //Por ahora, mientras se implementa el generador de IDs
+        this.id = IdGenerator.nextId();
         this.nombre = nombre;
         this.telefono = telefono;
     }
