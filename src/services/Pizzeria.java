@@ -1,21 +1,15 @@
 package services;
 
-import model.Cliente;
-import model.Pedido;
-import model.Producto;
-import model.TipoEntrega;
-
+public class Pizzeria {
 import java.util.ArrayList;
+import model.Producto;
+import model.Pedido;
+import model.Cliente;
+import model.TipoEntrega;
+import util.Reglas;
 
-public class IdGenerator {
-    private static int current = 100;
 
-    public static int nextId() {
-        current++;
-        return current;
-    }
-
-    public static class Pizzeria {
+    public class Pizzeria {
         private final String nombre;
 
         private final ArrayList<Producto> menu     = new ArrayList<>();
