@@ -1,5 +1,7 @@
 package model;
 import services.IdGenerator;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Pedido {
       private int id;
@@ -13,9 +15,10 @@ public class Pedido {
             private int cantidad;
             private String fecha;
 
-            public DetallePedido(int cantidad, String fecha) {
-                  this.cantidad = cantidad;
-                  this.fecha = fecha;
+            public DetallePedido(int cantidad) {
+                  this.cantidad = (cantidad > 0) ? cantidad : 1;
+                  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                  this.fecha = LocalDateTime.now().format(dtf);
             }
 
             public int getCantidad() { return this.cantidad; }
@@ -27,7 +30,7 @@ public class Pedido {
             this.activo = true;
             this.cliente = cliente;
             this.producto = producto;
-            this.detalle = new DetallePedido(cantidad, "07/03/2026");
+            this.detalle = new DetallePedido(cantidad);
             this.tipoEntrega = tipoEntrega;
       }
 
@@ -40,4 +43,10 @@ public class Pedido {
       public boolean isActivo() { return this.activo; }
 
       public void cerrar() { this.activo = false; }
+      
+      @Override
+      public String toString() {
+        return "Pedido ID = " + id + " | Cliente = "  + cliente.getNombre()+ " | Producto = " + producto.getNombre()+ " | Cantidad = " + detalle.getCantidad()+ " | Entrega = "  + tipoEntrega.getDescripcion()
+                + " | Activo = "   + activo;
+     }
 }
