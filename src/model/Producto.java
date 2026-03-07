@@ -1,32 +1,46 @@
 package model;
+import service.IdGenerator;
 
 public abstract class Producto implements Pedible {
     private int id;
     private String nombre;
-    protected boolean disponibilidad;
+    protected boolean disponible = true;
 
-    public Producto(int id, String nombre) {
-        this.id = id;
+    protected Producto(String nombre) {
+        this.id = IdGenerator.nextId(); 
         this.nombre = nombre;
     }
 
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    public void setNombre(String nombre) {
+        if (nombre == null || nombre.isBlank()) return;
+        this.nombre = nombre; 
+    }
     public int getId() { return this.id; }
     public String getNombre() { return this.nombre; }
+    
+    public abstract String getTipo();
     public abstract double calcularValorBase();
 
     @Override
     public void pedir() {
         System.out.println("Pedido");
-        this.disponibilidad = false;
+        this.disponible = false;
     }
 
     @Override
     public void cancelar() {
         System.out.println("Cancelado");
-        this.disponibilidad = true;
+        this.disponible = true;
     }
 
     @Override
-    public boolean estaDisponible() { return disponibilidad; }
+    public boolean estaDisponible() { return disponible; }
+    
+    @Override
+    public String toString() {
+        return "[" + getTipo() + "] ID = " + id
+                + ", Nombre = '" + nombre + "'"
+                + ", Disponible = " + disponible;
+    }
 }
+
