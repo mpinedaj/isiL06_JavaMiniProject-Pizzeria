@@ -1,11 +1,12 @@
 package model;
+import exceptions.PizzeriaException;
 import services.IdGenerator;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Pedido {
+public class Pedido implements Entregable {
       private int id;
-      private boolean activo;
+      private EstadoPedido estado;
       private Cliente cliente;
       private Producto producto;
       private DetallePedido detalle;
@@ -27,7 +28,7 @@ public class Pedido {
 
       public Pedido(Cliente cliente, Producto producto, int cantidad, TipoEntrega tipoEntrega) {
             this.id = IdGenerator.nextId();
-            this.activo = true;
+            this.estado = EstadoPedido.PENDIENTE;
             this.cliente = cliente;
             this.producto = producto;
             this.detalle = new DetallePedido(cantidad);
@@ -40,13 +41,36 @@ public class Pedido {
       public int getCantidad() { return detalle.getCantidad(); }
       public String getFecha() { return detalle.getFecha(); }
       public TipoEntrega getTipoEntrega() { return this.tipoEntrega; }
-      public boolean isActivo() { return this.activo; }
+      public String getEstado() { return this.estado.getDescripcion(); }
+      @Override
+      public void pedir()    { this.estado = EstadoPedido.EN_PROCESO; }
 
-      public void cerrar() { this.activo = false; }
-      
+      @Override
+      public boolean entregar() {
+            if (this.estado == EstadoPedido.CANCELADO) {
+                  throw new PizzeriaException("ERROR: No se puede entregar un pedido cancelado.");
+            }
+            this.estado = EstadoPedido.ENTREGADO;
+            return true;
+      }
+
+      @Override
+      public boolean cancelar() {
+            if (this.estado == EstadoPedido.ENTREGADO) {
+                  throw new PizzeriaException("ERROR: No se puede cancelar un pedido que ya ha sido entregado.");
+            }
+            this.estado = EstadoPedido.CANCELADO;
+            return true;
+      }
+
+      @Override
+      public boolean estaActivo() {
+            return this.estado == EstadoPedido.EN_PROCESO || this.estado == EstadoPedido.PENDIENTE;
+      }
+
       @Override
       public String toString() {
         return "Pedido ID = " + id + " | Cliente = "  + cliente.getNombre()+ " | Producto = " + producto.getNombre()+ " | Cantidad = " + detalle.getCantidad()+ " | Entrega = "  + tipoEntrega.getDescripcion()
-                + " | Activo = "   + activo;
+                + " | Estado del pedido = "   + this.estado.getDescripcion();
      }
 }
