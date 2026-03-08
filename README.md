@@ -31,7 +31,6 @@ src/
 │   ├── Bebida.java 
 │   ├── Cliente.java
 │   ├── TipoEntrega.java
-│   ├── Pedible.java  
 │   └── Pedido.java   
 ├── service/
 │   ├── IdGenerator.java   
