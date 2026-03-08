@@ -276,12 +276,13 @@ Cliente no encontrado.
 ---
 
 ## Compilación y ejecución
-
+Se requiere la versión 25 del kit de Java Development (SE) que contiene el compilador (javac) y el ejecutable (java) que permite la ejecución del programa.
+Una vez hecho esto, se descarga el proyecto, también se puede hacer solo con el directorio src, se abre la consola y se confirma que la ruta sea dentro de la carpeta del proyecto, se ejecutará entonces:
 ```bash
 # Compilar
-
+javac -d out -sourcepath src src/ui/Main.java
 # Ejecutar
-
+java -cp out -ui.Main
 ```
 
 ---

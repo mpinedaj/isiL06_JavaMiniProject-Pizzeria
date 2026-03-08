@@ -1,4 +1,5 @@
 package model;
+import services.Reglas;
 
 public class Pizza extends Producto {
      private String tamano;
@@ -15,19 +16,17 @@ public class Pizza extends Producto {
 
      @Override
      public double calcularValorBase() {
-         switch (this.tamano.toLowerCase()) {
-             case "pequena":
-                 return 10000.0;
-             case "mediana":
-                 return 20000.0;
-             case "grande":
-                 return 40000.0;
-             default:
-                 System.out.println("ERROR, tamaño inválido.");
-                 return 0;
-         }
-     
+         return switch (tamano.toUpperCase()) {
+             case "P", "PEQUENA"  -> Reglas.PRECIO_PIZZA_PEQUENA;
+             case "M", "MEDIANA"  -> Reglas.PRECIO_PIZZA_MEDIANA;
+             case "G", "GRANDE"   -> Reglas.PRECIO_PIZZA_GRANDE;
+             default -> {
+                 System.out.println("ERROR: tamaño inválido: " + tamano);
+                 yield 0;
+             }
+         };
      }
+
      @Override
     public String getTipo() { return "Pizza"; }
 
@@ -35,5 +34,5 @@ public class Pizza extends Producto {
     public String toString() {
         return super.toString() + " (Sabor = " + sabor + ", Tamaño = " + tamano + ")";
     }
-     //===== Cambiar despues de que se hagan las reglas ======//
+
 }

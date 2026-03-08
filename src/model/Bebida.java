@@ -1,5 +1,4 @@
 package model;
-//import services.Reglas;
 
 public class Bebida extends Producto {
     private int volumenMl;
@@ -16,11 +15,12 @@ public class Bebida extends Producto {
 
     @Override
     public double calcularValorBase() {
-        return 0; // reglas
+        if (this.volumenMl <= 300) return 3000;
+        if (this.volumenMl <= 500) return 4500;
+        return 6000;
     }
-    
     @Override
     public String toString() {
-        return super.toString() + " (Volumen = " + volumenMl + "ml)";
+        return super.toString() + " (Volumen = " + this.volumenMl + "ml)";
     }
 }
