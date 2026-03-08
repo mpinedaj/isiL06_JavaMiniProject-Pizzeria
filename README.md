@@ -263,7 +263,7 @@ Confirmación: Pedido 14 ha sido cancelado.
 
 **Resultado esperado:**
 ```
-Cantidad inválida (1-9).
+Cantidad inválida (1-8).
 ```
 
 ---
