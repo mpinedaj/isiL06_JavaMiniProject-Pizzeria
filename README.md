@@ -22,7 +22,7 @@
 ```
 src/
 ├── model/
-│   ├── Pedible.java 
+│   ├── Entregable.java 
 │   ├── Producto.java  
 │   ├── Pizza.java 
 │   ├── Bebida.java 
@@ -46,7 +46,7 @@ src/
 
 ```java
 // Pizzeria.java
-double total = ......
+ double total = calculadoraTotal.calcular(valorBase, cantidad, tipoEntrega);
 ```
 
 ### 2. Asociación
@@ -64,14 +64,13 @@ parámetros, por lo que tienen existen por su cuenta.
 
 ```java
 // Main.java
-pizzeria.registrarCliente(new Cliente("", ""));
-pizzeria.registrarProducto(new Pizza("", "", ""));
+pizz.registrarCliente(new Cliente("Juan Diaz", "3132300200"));
+pizz.registrarProducto(new Pizza("Placer de antano", "M", "Pina - Peperoni"));
 ```
 
 
 ### 4. Composición
 `Pedido` crea internamente `DetallePedido`; este objeto no tiene sentido ni existencia fuera del pedido que lo contiene (clase estática privada).
-
 
 ```java
 // Pedido.java
@@ -119,7 +118,9 @@ Producto (abstracta)
 según el tipo real de producto (`Pizza` o `Bebida`).
 
 ```java
-for (Producto p : menu) {          
+System.out.println("\n--- Menú ---");
+for (Producto p : menu) {
+   System.out.println("  " + p + " | Precio base: $" + (int)p.calcularValorBase());
 }
 ```
 
@@ -132,22 +133,22 @@ for (Producto p : menu) {
 - `getTipo()`: devuelve el tipo de producto.
 - `calcularPrecioBase()`: cada producto define su propio precio.
 
-También implementa la interfaz `Pedible` con comportamiento común (`pedir()`, `cancelar()`, `estaDisponible()`).
-
 ---
 
 ## F. Interfaz
 
 ```java
-public interface Pedible {
-    void pedir();
-    void cancelar();
-    boolean estaDisponible();
+public interface Entregable {
+    public void pedir();
+    public boolean cancelar();
+    public boolean estaActivo ();
+    public boolean entregar();
 }
+
 ```
 
-`Producto` implements `Pedible`. Todas las subclases heredan la implementación.
-
+`Pedido` implements `Entregable`. Se utiliza la interfaz Entregable para definir el comportamiento que debe tener cualquier objeto que pueda ser entregado o cancelado. Por ejemplo, paara una futura implementación
+de una clase `Reserva`, la cual tambien puede ser pedida, cancelada, entregada o validar su estado. 
 ---
 
 ## G. Modificador `static`
@@ -160,7 +161,7 @@ public interface Pedible {
 | `CalculadoraTotal.calcular()` | `CalculadoraTotal.java` | Método utilitario estático |
 | `DetallePedido` (clase interna) | `Pedido.java` | Clase interna estática privada |
 | `TipoEntrega.*` | `TipoEntrega.java` | Valores enum son static final implícitos (colecciones de constantes fijas) |
-
+| `EstadoPedido.*` | `EstadoPedido.java` | Valores enum son static final implícitos (colecciones de constantes fijas) |
 ---
 
 
@@ -174,66 +175,92 @@ public interface Pedible {
 **Ejemplo:**
 ```
 --- Menú ---
-[Pizza] ID = 101, Nombre = 'Napolitana', Disponible = true   | Precio base: $15000
-[Pizza] ID = 102, Nombre = 'Mexicana', Disponible = true | Precio base: $25000
-[Pizza] ID = 103, Nombre = 'Tres Quesos', Disponible = true | Precio base: $18000
-[Bebida] ID = 104, Nombre = 'Coca-Cola', Disponible = true   | Precio base: $5000
-[Bebida] ID = 105, Nombre = 'Agua', Disponible = true        | Precio base: $3000
+  [Pizza] ID = 5, Nombre = 'Placer de antano', Disponible = true (Sabor = Pina - Peperoni, Tamaño = M) | Precio base: $20000
+  [Pizza] ID = 6, Nombre = 'Camaronzon', Disponible = true (Sabor = Camarones - Salsa, Tamaño = G) | Precio base: $35000
+  [Pizza] ID = 7, Nombre = 'Carnivora Suprema', Disponible = true (Sabor = Carne molida - Chorizo - Peperoni, Tamaño = G) | Precio base: $35000
+  [Pizza] ID = 8, Nombre = 'Veggie Deluxe', Disponible = true (Sabor = Champinones - Pimenton - Cebolla - Maiz, Tamaño = P) | Precio base: $15000
+  [Pizza] ID = 9, Nombre = 'Mexicana Picante', Disponible = true (Sabor = Carne - Jalapenos - Nachos triturados, Tamaño = M) | Precio base: $20000
+  [Bebida] ID = 10, Nombre = 'Cocacola', Disponible = true (Volumen = 350ml) | Precio base: $4500
+  [Bebida] ID = 11, Nombre = 'Sprite', Disponible = true (Volumen = 350ml) | Precio base: $4500
+  [Bebida] ID = 12, Nombre = 'Agua', Disponible = true (Volumen = 300ml) | Precio base: $3000
 ```
 
 ---
 
 ### Caso 2: Pedido en local (sin costo adicional)
-**Acción:** opción `3` --> ID Cliente: `101`, ID Producto: `103`, Cantidad: `1`, Entrega: `1` (Local)
+**Acción:** opción `3` --> ID Cliente: `1`, ID Producto: `5`, Cantidad: `2`, Entrega: `1` (Local)
 
 **Resultado esperado:**
 ```
-   Pedido creado: ID = 102
-   Entrega: Para aquí
-   Total:   $18000
+========================================
+           RESUMEN DEL PEDIDO           
+========================================
+ ID Pedido  : 13
+ Cliente    : Juan Diaz
+ Producto   : Placer de antano
+ Cantidad   : 2
+ Entrega    : Para aquí
+----------------------------------------
+ Subtotal   : $40.000,00
+ TOTAL      : $40.000,00
+========================================
 ```
 
 ---
 
 ### Caso 3: Pedido con domicilio (costo adicional)
-**Acción:** opción `3` ---> ID Cliente: `102`, ID Producto: `101`, Cantidad: `1`, Entrega: `3` (Domicilio)
+**Acción:** opción `3` ---> ID Cliente: `2`, ID Producto: `10`, Cantidad: `1`, Entrega: `3` (Domicilio)
 
 **Resultado esperado:**
 ```
-   Pedido creado: ID = 103
-   Entrega: Domicilio (+$3000)
-   Total:   $18000
+========================================
+           RESUMEN DEL PEDIDO           
+========================================
+ ID Pedido  : 14
+ Cliente    : Martin Marco
+ Producto   : Cocacola
+ Cantidad   : 1
+ Entrega    : Envío a domicilio(+$3000)
+----------------------------------------
+ Subtotal   : $4.500,00
+ TOTAL      : $7.500,00
+========================================
+
 ```
 
 ---
 
-### Caso 4: Producto no disponible
-**Acción:** intentar pedir el mismo producto del Caso 2 (ID Producto: `103` ya fue pedido)
+### Caso 4: Entregar Pedido
+**Acción:** opción `4`  ---> se muestran pedidos activos ---> ingresar ID del pedido del Caso 2
 
 **Resultado esperado:**
 ```
-  El producto no está disponible.
+--- Pedidos Activos ---
+Pedido ID = 13 | Cliente = Juan Diaz | Producto = Placer de antano | Cantidad = 2 | Entrega = Para aquí | Estado del pedido = Pedido en preparación
+Confirmación: Pedido 13 marcado como entregado.
 ```
 
 ---
 
-### Caso 5: Cancelar pedido y liberar producto
-**Acción:** opción `4` ---> ID Pedido: `102`
+### Caso 5: Cancelar pedido 
+**Acción:** opción `5` ---> se muestran pedidos activos ---> ingresar ID del pedido del Caso 3
 
 **Resultado esperado:**
 ```
-  Pedido 102 cancelado.
+--- Pedidos Activos ---
+Pedido ID = 14 | Cliente = Martin Marco | Producto = Cocacola | Cantidad = 1 | Entrega = Envío a domicilio | Estado del pedido = Pedido en preparación
+ID Pedido a cancelar: 14
+Confirmación: Pedido 14 ha sido cancelado.
 ```
-Luego listar menú ---> Tres Quesos vuelve a `Disponible=true`.
 
 ---
 
-### Caso 6: Cantidad inválida
-**Acción:** opción `3` ---> Cantidad: `0` o `11`
+### Caso 6: Intentar entregar un pedido ya cancelado
+**Acción:** opción `4` ---> Cantidad: `0` o `9`
 
 **Resultado esperado:**
 ```
-Cantidad inválida (1-10).
+Cantidad inválida (1-9).
 ```
 
 ---
@@ -249,12 +276,13 @@ Cliente no encontrado.
 ---
 
 ## Compilación y ejecución
-
+Se requiere la versión 25 del kit de Java Development (SE) que contiene el compilador (javac) y el ejecutable (java) que permite la ejecución del programa.
+Una vez hecho esto, se descarga el proyecto, también se puede hacer solo con el directorio src, se abre la consola y se confirma que la ruta sea dentro de la carpeta del proyecto, se ejecutará entonces:
 ```bash
 # Compilar
-
+javac -d out -sourcepath src src/ui/Main.java
 # Ejecutar
-
+java -cp out -ui.Main
 ```
 
 ---
@@ -263,7 +291,7 @@ Cliente no encontrado.
 
 - [x] UML completo con relaciones y visibilidad (ver `/docs/uml.png`)
 - [x] Clase abstracta `Producto` con subclases `Pizza` y `Bebida`
-- [x] Interfaz `Pedible` implementada correctamente
+- [x] Interfaz `Entregable` implementada correctamente
 - [x] Polimorfismo con `ArrayList<Producto>`
 - [x] Uso correcto de `static` (IdGenerator, Reglas, CalculadoraTotal, TipoEntrega)
 - [x] README con 7 casos de prueba
