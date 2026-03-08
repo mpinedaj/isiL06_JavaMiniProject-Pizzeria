@@ -38,7 +38,7 @@ src/
 │   ├── Reglas.java
 │   ├── CalculadoraTotal.java
 │   └── Pizzeria.java
-├── service/
+├── exceptions/
 │   └── PizzaException.java
 └── ui/
     ├── PizzaAnimation.java
