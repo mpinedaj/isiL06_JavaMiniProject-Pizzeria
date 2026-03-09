@@ -87,7 +87,8 @@ public class PizzaAnimation {
         System.out.println();
     }
 
-    static void parpadear() throws InterruptedException {
+    //Por ahora, comentar la función ya que no se usa
+    /*static void parpadear() throws InterruptedException {
         for (int i = 0; i < 4; i++) {
             System.out.print(ORANGE + "\u2588" + RESET);
             System.out.flush();
@@ -99,5 +100,5 @@ public class PizzaAnimation {
         System.out.print(ORANGE + "\u2588" + RESET);
         System.out.flush();
         System.out.println();
-    }
+    }*/
 }

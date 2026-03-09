@@ -18,11 +18,11 @@ public class Reserva implements Entregable {
         this.estado = EstadoPedido.PENDIENTE;
     }
 
-    public int getId() { return id; }
-    public Cliente getCliente() { return cliente; }
-    public int getNumPersonas() { return numPersonas; }
-    public String getHora() { return hora; }
-    public String getEstado() { return estado.getDescripcion(); }
+    public int getId() { return this.id; }
+    public Cliente getCliente() { return this.cliente; }
+    public int getNumPersonas() { return this.numPersonas; }
+    public String getHora() { return this.hora; }
+    public String getEstado() { return this.estado.getDescripcion(); }
 
     @Override
     public void pedir() {
@@ -49,12 +49,12 @@ public class Reserva implements Entregable {
 
     @Override
     public boolean estaActivo() {
-        return estado.getEstadoActividad();
+        return this.estado.getEstadoActividad();
     }
 
     @Override
     public String toString() {
-        return "Reserva ID = " + id + " | Cliente = " + cliente.getNombre() + " | Personas = " + numPersonas
-                + " | Hora = " + hora + " | Estado = " + estado.getDescripcion();
+        return "Reserva ID = " + this.id + " | Cliente = " + this.cliente.getNombre() + " | Personas = " + this.numPersonas
+                + " | Hora = " + this.hora + " | Estado = " + this.estado.getDescripcion();
     }
 }

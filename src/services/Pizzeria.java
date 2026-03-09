@@ -8,7 +8,6 @@ import services.Reglas;
 
 public class Pizzeria {
     private final String nombre;
-
     private final ArrayList<Producto> menu = new ArrayList<>();
     private final ArrayList<Cliente> clientes = new ArrayList<>();
     private final ArrayList<Pedido> pedidos  = new ArrayList<>();
@@ -133,6 +132,12 @@ public class Pizzeria {
     }
 
     public void registrarReserva(int idCliente, int numPersonas, String hora) {
+        if (reservas.size() == Reglas.MAX_CANT_RESERVAS) {
+            throw new PizzeriaException("Máxima cantidad de reservas activas alcanzada. Confirme o cancele una reserva activa para poder registrar una nueva");
+        }
+        if (numPersonas < 1 || numPersonas > Reglas.MAX_CANT_PERSONAS_X_RESERVA) {
+            throw new PizzeriaException("Número de personas inválida, solo puede registrar entre 1 y " + Reglas.MAX_CANT_PERSONAS_X_RESERVA + " en la reserva.");
+        }
         Cliente c = buscarCliente(idCliente);
         if (c == null) {
             System.out.println("Cliente no encontrado.");

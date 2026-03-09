@@ -134,7 +134,6 @@ public class Main {
         System.out.println("10) Cancelar Reserva");
         System.out.println("11) Listar Reservas");
         System.out.println("0)  Salir");
-        System.out.println("");
         System.out.print("Opción: ");
     }
 

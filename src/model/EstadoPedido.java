@@ -16,4 +16,9 @@ public enum EstadoPedido {
 
     public boolean getEstadoActividad() { return this.activo; }
     public String getDescripcion() { return this.descripcion; }
+
+    @Override
+    public String toString() {
+        return this.descripcion + ((this.activo) ? " -> pedido activo." : " -> pedido inactivo.");
+    }
 }

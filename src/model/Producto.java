@@ -3,7 +3,7 @@ import exceptions.PizzeriaException;
 import services.IdGenerator;
 
 public abstract class Producto  {
-    private int id;
+    private final int id;
     private String nombre;
     protected boolean disponible = true;
 
@@ -11,7 +11,6 @@ public abstract class Producto  {
         this.id = IdGenerator.nextId(); 
         this.nombre = nombre;
     }
-
     public void setNombre(String nombre) {
         if (nombre == null || nombre.isBlank()) {
             throw new PizzeriaException("El nombre del producto no puede estar vacío.");
@@ -28,9 +27,9 @@ public abstract class Producto  {
     
     @Override
     public String toString() {
-        return "[" + getTipo() + "] ID = " + id
-                + ", Nombre = '" + nombre + "'"
-                + ", Disponible = " + disponible;
+        return "[" + getTipo() + "] ID = " + this.id
+                + ", Nombre = '" + this.nombre + "'"
+                + ", Disponible = " + this.disponible;
     }
 }
 

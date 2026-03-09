@@ -38,10 +38,10 @@ public class Pedido implements Entregable {
       public int getId() { return this.id; }
       public Cliente getCliente() { return this.cliente; }
       public Producto getProducto() { return this.producto; }
-      public int getCantidad() { return detalle.getCantidad(); }
-      public String getFecha() { return detalle.getFecha(); }
+      public int getCantidad() { return this.detalle.getCantidad(); }
+      public String getFecha() { return this.detalle.getFecha(); }
       public TipoEntrega getTipoEntrega() { return this.tipoEntrega; }
-      public String getEstado() { return this.estado.getDescripcion(); }
+      public EstadoPedido getEstado() { return this.estado; }
       @Override
       public void pedir()    { this.estado = EstadoPedido.EN_PROCESO; }
 

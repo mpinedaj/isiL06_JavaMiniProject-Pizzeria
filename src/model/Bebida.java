@@ -1,7 +1,7 @@
 package model;
 
 public class Bebida extends Producto {
-    private int volumenMl;
+    private final int volumenMl;
 
     public Bebida(String nombre, int volumenMl) {
         super(nombre);
