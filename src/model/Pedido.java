@@ -5,16 +5,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Pedido implements Entregable {
-      private int id;
+      private final int id;
       private EstadoPedido estado;
-      private Cliente cliente;
-      private Producto producto;
-      private DetallePedido detalle;
-      private TipoEntrega tipoEntrega;
+      private final Cliente cliente;
+      private final Producto producto;
+      private final DetallePedido detalle;
+      private final TipoEntrega tipoEntrega;
       
       private static class DetallePedido {
-            private int cantidad;
-            private String fecha;
+            private final int cantidad;
+            private final String fecha;
 
             public DetallePedido(int cantidad) {
                   this.cantidad = (cantidad > 0) ? cantidad : 1;
