@@ -3,7 +3,7 @@ import exceptions.PizzeriaException;
 import services.IdGenerator;
 
 public class Cliente {
-    private int id;
+    private final int id;
     private String nombre;
     private String telefono;
 
