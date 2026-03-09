@@ -296,7 +296,7 @@ java -cp out -ui.Main
 
 ## Lista de chequeo 
 
-- [x] UML completo con relaciones y visibilidad (ver `/docs/uml.png`)
+- [x] UML completo con relaciones y visibilidad (ver `/docs/UmlJavaPizza.png`)
 - [x] Clase abstracta `Producto` con subclases `Pizza` y `Bebida`
 - [x] Interfaz `Entregable` implementada correctamente
 - [x] Polimorfismo con `ArrayList<Producto>`
